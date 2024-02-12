@@ -1181,13 +1181,13 @@ class ImageAccessor:
         )
 
     def removeProperties(self, properties: ee_list) -> ee.Image:
-        """Remove a list of properties from an image.
+        """Remove a list of specified properties from the Image object.
 
         Args:
             properties: List of properties to remove from the image.
 
         Returns:
-            Image with the specified properties removed.
+            a new image with all of the specified properties removed
 
         Examples:
             .. code-block:: python
@@ -1200,5 +1200,6 @@ class ImageAccessor:
                 image = image.removeProperties(["system:time_start"])
         """
         properties = ee.List(properties)
-        proxy = self._obj.multiply(1)  # drop properties
-        return ee.Image(proxy.copyProperties(self._obj, exclude=properties))
+        proxy = self._obj.multiply(1) 
+        final_image = ee.Image(proxy.copyProperties(self._obj, exclude=properties))
+        return final_image
