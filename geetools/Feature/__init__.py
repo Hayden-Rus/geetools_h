@@ -39,13 +39,13 @@ class FeatureAccessor:
         return ee.FeatureCollection(fc)
 
     def removeProperties(self, properties: ee_list) -> ee.Feature:
-        """Remove properties from a feature.
+        """Remove a list of properties from the feature object
 
         Args:
             properties : List of properties to remove
 
         Returns:
-            The feature without the properties
+            The a feature that has the same properties execpt the ones specified in the list
 
         Example:
             .. code-block:: python
@@ -60,5 +60,6 @@ class FeatureAccessor:
                     print(feature.getInfo())
         """
         properties = ee.List(properties)
-        proxy = ee.Feature(self._obj.geometry())  # drop properties
-        return proxy.copyProperties(self._obj, exclude=properties)
+        proxy = ee.Feature(self._obj.geometry())  
+        final_feature = proxy.copyProperties(self._obj, exclude=properties)
+        return final_feature
